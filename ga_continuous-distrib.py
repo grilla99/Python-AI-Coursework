@@ -23,22 +23,44 @@ SOLUTION_FOUND = False
 CORSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
 MUTATION_RATE = 0.2 # Change MUTATION_RATE to obtain better fitness.
 
+LOWER_BOUND = -10
+UPPER_BOUND = 10
+FITNESS_CHOICE = 1
 
-# MINIMUM FUNCTIONS TO BE USED IN YOU COURSEWORK
+NO_OF_GENES = 8
+
+
 def generate_population(size, lower_bound, upper_bound):
-    
-    population = []# Update this line if you need to
-    #TODO : Write your own code to generate population of POPULATION_SIZE individuals    
-    
+    population = [generate_individual(NO_OF_GENES, lower_bound, upper_bound)
+                  for _ in range(size)]
+    # Returns an array of individuals, each composed of 1 or more ints
     return population
 
 
+def generate_individual(no_of_genes, lower_bound, upper_bound):
+    # Individual is a list of random ints in a range
+    return [random.randrange(lower_bound, upper_bound) for _ in range(no_of_genes)]
+
+
+# Function used to calculate the fitness of an individual dependent on the problem to be solved
 def compute_fitness(individual):
-    #TODO : Write your own code to generate fitness function evaluation for your select functions
-    print('fitness computed')
-    fitness = np.nan()
-    
+    fitness_function = {
+        1: sum_square
+    }
+
+    fitness_func = fitness_function.get(FITNESS_CHOICE)
+
+    return fitness_func(individual)
+
+
+def sum_square(individual):
+    fitness = sum([(x+1) * individual[x]**2 for x in range(NO_OF_GENES)])
+    try:
+        fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
     return fitness
+
 
 
 def selection(population):
@@ -85,7 +107,11 @@ def main():
     lower_bound = [] #Update this
     upper_bound = [] #Update this
     
-    population = generate_population(POPULATION_SIZE, lower_bound, upper_bound)
+    population = generate_population(POPULATION_SIZE, LOWER_BOUND, UPPER_BOUND)
+
+    for x in range(len(population)):
+        print(compute_fitness(population[x]))
+
     
     print('complete code for a continuous optimization problem:')
     while (True):  # TODO: write your termination condition here or within the loop 
