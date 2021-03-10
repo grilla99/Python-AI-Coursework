@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib as plt
 
 
-from math import cos, pi
+from math import cos, pi, sin,sqrt
 
 # MINIMUM GLOBAL VARIABLES TO BE USED
 POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
@@ -25,9 +25,9 @@ SOLUTION_FOUND = False
 CROSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
 MUTATION_RATE = 0.6 # Change MUTATION_RATE to obtain better fitness.
 
-LOWER_BOUND = -10
-UPPER_BOUND = 10
-FITNESS_CHOICE = 4
+LOWER_BOUND = -100
+UPPER_BOUND = 100
+FITNESS_CHOICE = 6
 
 NO_OF_PARENTS = 8
 NO_OF_GENES = 8
@@ -38,9 +38,9 @@ FITNESS_DICTIONARY = {
     1: "Sum Squares",
     2: "Rastrigin",
     3: "Dixon Price",
-    4: "",
-    5: "",
-    6: ""
+    4: "Rosenbrock",
+    5: "Schwefel",
+    6: "Trid"
 }
 
 
@@ -62,7 +62,9 @@ def compute_fitness(individual):
         1: sum_square,
         2: rastrigin,
         3: dixon_price,
-        4: trid
+        4: rosenbrock,
+        5: schwefel,
+        6: trid
     }
 
     fitness_func = fitness_function.get(FITNESS_CHOICE)
@@ -80,6 +82,15 @@ def sum_square(individual):
     return fitness
 
 
+def rosenbrock(individual):
+    fitness = sum((100 * (individual[x+1] - individual[x]**2)**2 + ((individual[x] - 1) ** 2) for x in individual))
+    try:
+        fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+
 def rastrigin(individual):
     fitness = 10 * len(individual) + sum([((x - 1)**2 - 10 * cos(2 * pi * (x-1))) for x in individual])
     try:
@@ -90,9 +101,35 @@ def rastrigin(individual):
 
 
 def dixon_price(individual):
-    fitness = (individual[0]-1)** 2 + sum((i + 1) * (2 * individual[i]**2 - individual[i-1])**2 for i in range(1, len(individual)))
+    fitness = (individual[0]-1)** 2 + sum((x + 1) * (2 * individual[x]**2 - individual[x-1])**2 for x in range(1, NO_OF_GENES))
     try:
         fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+#TODO: Change the INPUT RANGE to be -500 - 500 for this one
+def schwefel(individual):
+    # Schwefel function defined as 418.9829 * dimensions - .... , here we assume 1 dimension
+    fitness = 418 - sum(individual[x] * sin(sqrt(abs(individual[x]))) for x in range(1, NO_OF_GENES))
+    try:
+        fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+
+def trid(individual):
+    term1 = sum((individual[x]-1)** 2 for x in range(NO_OF_GENES))
+    term2 = sum((individual[x] * individual[x-1]) for x in range(1, NO_OF_GENES))
+
+    fitness = term1 - term2
+    ## Has no local minimum only the global. Defined as -d(d+4)(d-1)/6
+
+    ideal_fitness = -NO_OF_GENES*(NO_OF_GENES+4)*(NO_OF_GENES-1) / 6
+
+    try:
+        fitness = abs(1/fitness-ideal_fitness) * 100
     except ZeroDivisionError:
         fitness = float('inf')
     return fitness
@@ -144,6 +181,7 @@ def crossover(parents, num_of_offspring):
 
     return offspring
 
+
 def mutation(offspring):
 
     #RANDOM RESETTING MUTATION
@@ -159,6 +197,22 @@ def mutation(offspring):
     return offspring
 
 
+def find_best_input(population, fitness):
+    best_fitness = max(fitness)
+    individual_index = fitness.index(best_fitness)
+
+    return population[individual_index]
+
+
+def next_generation(generation, fitness, parents, offspring):
+    best_fitness = max(fitness)
+    print("\n Generation ", generation, ": ",
+          "\n Parents Selected: \n", parents,
+          "\n Offspring", offspring,
+          "\nFitness", fitness,
+          "\nBest fitness after generation", best_fitness)
+
+
 def check_solution(population):
     ideal_individual = [0 for x in range(NO_OF_GENES)]
 
@@ -168,18 +222,6 @@ def check_solution(population):
             return True
 
     return False
-
-def find_best_input(population, fitness):
-    best_fitness = max(fitness)
-    individual_index = fitness.index(best_fitness)
-
-    return population[individual_index]
-
-
-def next_generation(previous_population):
-
-    print(' ') # Print appropriate generation information here.
-    return next_generation
 
 
 # USE THIS MAIN FUNCTION TO COMPLETE YOUR CODE - MAKE SURE IT WILL RUN FROM COMOND LINE

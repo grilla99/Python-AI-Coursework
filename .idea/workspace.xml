@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2e249dc-f808-4709-8aae-5de9b012172d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ga_continuous-distrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ga_continuous-distrib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,12 +33,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="6039" />
+          <entry key="py" value="7529" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="6039" />
+          <entry key="Python" value="7529" />
         </counts>
       </usages-collector>
     </session>
@@ -49,14 +48,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
+            <state relative-caret-position="376">
+              <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
               <folding>
                 <element signature="e#215#228#0" expanded="true" />
-                <marker date="1615397520224" expanded="true" signature="2565:2568" ph="..." />
-                <marker date="1615397520224" expanded="true" signature="2617:2623" ph="..." />
-                <marker date="1615397520224" expanded="true" signature="4254:4255" ph="..." />
-                <marker date="1615397520224" expanded="true" signature="5022:5149" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="2121:2368" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="3000:3005" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="3347:3812" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="3862:3867" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="5499:5500" ph="..." />
+                <marker date="1615406974685" expanded="true" signature="5984:6111" ph="..." />
               </folding>
             </state>
           </provider>
@@ -69,6 +70,7 @@
       <find>fitness</find>
       <find>relative_fitne</find>
       <find>print</find>
+      <find>roulette</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -89,7 +91,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="25" />
-    <option name="width" value="1577" />
+    <option name="width" value="921" />
     <option name="height" value="1025" />
   </component>
   <component name="ProjectView">
@@ -168,10 +170,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1577" height="1025" extended-state="0" />
+    <frame x="0" y="25" width="921" height="1025" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0013029316" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0022753128" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -204,14 +206,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
+        <state relative-caret-position="376">
+          <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
           <folding>
             <element signature="e#215#228#0" expanded="true" />
-            <marker date="1615397520224" expanded="true" signature="2565:2568" ph="..." />
-            <marker date="1615397520224" expanded="true" signature="2617:2623" ph="..." />
-            <marker date="1615397520224" expanded="true" signature="4254:4255" ph="..." />
-            <marker date="1615397520224" expanded="true" signature="5022:5149" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="2121:2368" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="3000:3005" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="3347:3812" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="3862:3867" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="5499:5500" ph="..." />
+            <marker date="1615406974685" expanded="true" signature="5984:6111" ph="..." />
           </folding>
         </state>
       </provider>
