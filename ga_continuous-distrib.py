@@ -14,21 +14,34 @@ import numpy as np
 import matplotlib as plt
 
 
+from math import cos, pi
+
 # MINIMUM GLOBAL VARIABLES TO BE USED
 POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
 
 GENERATIONS = 100 # Change GENERATIONS to obtain better fitness.
 SOLUTION_FOUND = False
 
-CORSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
-MUTATION_RATE = 0.2 # Change MUTATION_RATE to obtain better fitness.
+CROSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
+MUTATION_RATE = 0.6 # Change MUTATION_RATE to obtain better fitness.
 
 LOWER_BOUND = -10
 UPPER_BOUND = 10
-FITNESS_CHOICE = 1
+FITNESS_CHOICE = 4
 
-NO_OF_PARENTS = 2
+NO_OF_PARENTS = 8
 NO_OF_GENES = 8
+NO_OF_OFFSPRING = 1
+
+
+FITNESS_DICTIONARY = {
+    1: "Sum Squares",
+    2: "Rastrigin",
+    3: "Dixon Price",
+    4: "",
+    5: "",
+    6: ""
+}
 
 
 def generate_population(size, lower_bound, upper_bound):
@@ -46,7 +59,10 @@ def generate_individual(no_of_genes, lower_bound, upper_bound):
 # Function used to calculate the fitness of an individual dependent on the problem to be solved
 def compute_fitness(individual):
     fitness_function = {
-        1: sum_square
+        1: sum_square,
+        2: rastrigin,
+        3: dixon_price,
+        4: trid
     }
 
     fitness_func = fitness_function.get(FITNESS_CHOICE)
@@ -56,6 +72,7 @@ def compute_fitness(individual):
 
 def sum_square(individual):
     fitness = sum([(x+1) * individual[x]**2 for x in range(NO_OF_GENES)])
+    # Case where fitness will be 0 and thus need to account for the error message
     try:
         fitness = abs(1/fitness) * 100
     except ZeroDivisionError:
@@ -63,10 +80,27 @@ def sum_square(individual):
     return fitness
 
 
+def rastrigin(individual):
+    fitness = 10 * len(individual) + sum([((x - 1)**2 - 10 * cos(2 * pi * (x-1))) for x in individual])
+    try:
+        fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
 
-def selection(population, fitness):
 
-    individual = []  # Update this line if you need to
+def dixon_price(individual):
+    fitness = (individual[0]-1)** 2 + sum((i + 1) * (2 * individual[i]**2 - individual[i-1])**2 for i in range(1, len(individual)))
+    try:
+        fitness = abs(1/fitness) * 100
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+
+def selection(population, fitness,no_of_parents):
+
+    parents = np.empty((no_of_parents, NO_OF_GENES))
 
     # Declaration required to avoid referenced before assignment error
     positive_fitness = fitness.copy()
@@ -81,40 +115,68 @@ def selection(population, fitness):
         # Computes the relative likelihoods for each parent to be chosen
         relative_fitness = [(n / total_fitness) for n in positive_fitness]
         #Uses numpy to create a random sample using the relative fitness
-        roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False, p=relative_fitness)
-
+        roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False,
+                                            p=relative_fitness)
     except ZeroDivisionError:
         print("Population fitness of 0")
         roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False)
-
+        return False
     parents = [population[x] for x in roulette_indices]
-    print(parents)
 
-    return individual
-
-
-def crossover(first_parent, second_parent):
-
-    individual = [] # Update this line if you need to
-    #TODO : Write your own code to for choice  of your crossover operator - you can use if condition to write more tan one ime of crossover operator
-
-    return individual
-
-def mutation(individual):
-
-    #TODO : Write your own code to for choice  of your mutation operator - you can use if condition to write more tan one ime of crossover operator
+    return parents
 
 
-    return individual
+def crossover(parents, num_of_offspring):
 
-#TODO : You can increase number of function to be used to improve your GA code
+    offspring = np.empty((num_of_offspring, NO_OF_GENES))
+
+    ## SINGLE POINT CROSSOVER ##
+
+    for i in range(num_of_offspring):
+        ## Get index of two parents within the array
+        parent1_index = i%NO_OF_PARENTS
+        parent2_index = (i+1)%NO_OF_PARENTS
+
+        if random.random() < CROSSOVER_RATE:
+            offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
+        else:
+            offspring[i] = list(parents[parent1_index])
+
+    return offspring
+
+def mutation(offspring):
+
+    #RANDOM RESETTING MUTATION
+    no_of_mutations = 1
+
+    for x in range(len(offspring-1)):
+        if random.random() < MUTATION_RATE:
+            random_index = random.sample(range(NO_OF_GENES), no_of_mutations)
+            random_value = random.sample(range(LOWER_BOUND, UPPER_BOUND), no_of_mutations)
+            for i in range(len(random_index)):
+                offspring[x][random_index[i]] = random_value[0]
+
+    return offspring
 
 
+def check_solution(population):
+    ideal_individual = [0 for x in range(NO_OF_GENES)]
+
+    for x in population:
+        if len([i for i, j in zip(x, ideal_individual) if i == j]) == NO_OF_GENES:
+            print("Ideal Individual Found")
+            return True
+
+    return False
+
+def find_best_input(population, fitness):
+    best_fitness = max(fitness)
+    individual_index = fitness.index(best_fitness)
+
+    return population[individual_index]
 
 
 def next_generation(previous_population):
-    #TODO : Write your own code to generate next
-
 
     print(' ') # Print appropriate generation information here.
     return next_generation
@@ -126,20 +188,34 @@ def main():
     global GENERATIONS
     global SOLUTION_FOUND
 
-    lower_bound = [] #Update this
-    upper_bound = [] #Update this
+    gen_count = 1
 
     population = generate_population(POPULATION_SIZE, LOWER_BOUND, UPPER_BOUND)
 
-    for x in range(len(population)):
-        print(compute_fitness(population[x]))
-
     fitness = [compute_fitness(x) for x in population]
 
-    print(selection(population, fitness))
+    while gen_count <= GENERATIONS and SOLUTION_FOUND != True:
+
+        parents = selection(population,fitness,NO_OF_PARENTS)
+
+        offspring = crossover(parents, POPULATION_SIZE - NO_OF_PARENTS)
+
+        offspring = mutation(offspring)
+
+        population = list(parents) + list(offspring)
+
+        fitness = [compute_fitness(x) for x in population]
+
+        if check_solution(population):
+            SOLUTION_FOUND = True
+        else:
+            gen_count += 1
 
 
-    print('complete code for a continuous optimization problem:')
+    print("Best Individual", find_best_input(population,fitness))
+
+
+         # print('complete code for a continuous optimization problem:')
     while (True):  # TODO: write your termination condition here or within the loop
         #TODO: write your generation propagation code here
 
