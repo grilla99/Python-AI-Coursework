@@ -20,17 +20,47 @@ POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
 GENERATIONS = 100 # Change GENERATIONS to obtain better fitness.
 SOLUTION_FOUND = False
 
-CORSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
+CROSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
 MUTATION_RATE = 0.2 # Change MUTATION_RATE to obtain better fitness.
 
+LOWER_BOUND = -10
+UPPER_BOUND = 10
+FITNESS_CHOICE = 1
 
-# MINIMUM FUNCTIONS TO BE USED IN YOU COURSEWORK
+NO_OF_GENES = 8
+NO_OF_PARENTS = 8
+
+FITNESS_DICTIONARY = {
+    1: "Sum 1s (Minimisation)",
+    2: "Sum 1s (Maximisation)"
+}
+
+
 def generate_population(size):
     
-    population = []# Update this line if you need to
-    #TODO : Write your own code to generate population of POPULATION_SIZE individuals    
+    population = [[random.randint(0, 1) for _ in range(NO_OF_GENES)] for _ in range(POPULATION_SIZE)]
     
     return population
+
+def compute_fitness(individual):
+    fitness_Function = {
+        1: sum_ones,
+        2: sum_ones,
+    }
+
+
+def sum_ones(individual):
+    fitness = 0
+    digit_to_match = 1 #TODO: Make this change depending on if it's a min or maximisation function
+
+    for x in individual:
+        if x == digit_to_match:
+            fitness += 1
+
+    return fitness
+
+
+
 
 
 def compute_fitness(individual):

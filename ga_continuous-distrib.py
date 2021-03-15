@@ -25,9 +25,11 @@ SOLUTION_FOUND = False
 CROSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
 MUTATION_RATE = 0.6 # Change MUTATION_RATE to obtain better fitness.
 
-LOWER_BOUND = -100
-UPPER_BOUND = 100
+LOWER_BOUND = -10
+UPPER_BOUND = 10
 FITNESS_CHOICE = 6
+
+RUN_CHOICE = 2
 
 NO_OF_PARENTS = 8
 NO_OF_GENES = 8
@@ -183,16 +185,26 @@ def crossover(parents, num_of_offspring):
 
 
 def mutation(offspring):
-
     #RANDOM RESETTING MUTATION
     no_of_mutations = 1
+    if RUN_CHOICE == 1:
+        for x in range(len(offspring-1)):
+            if random.random() < MUTATION_RATE:
+                random_index = random.sample(range(NO_OF_GENES), no_of_mutations)
+                random_value = random.sample(range(LOWER_BOUND, UPPER_BOUND), no_of_mutations)
+                for i in range(len(random_index)):
+                    offspring[x][random_index[i]] = random_value[0]
 
-    for x in range(len(offspring-1)):
-        if random.random() < MUTATION_RATE:
-            random_index = random.sample(range(NO_OF_GENES), no_of_mutations)
-            random_value = random.sample(range(LOWER_BOUND, UPPER_BOUND), no_of_mutations)
-            for i in range(len(random_index)):
-                offspring[x][random_index[i]] = random_value[0]
+    #Inversion Mutation, Flips - to + and + to -
+    elif RUN_CHOICE == 2:
+        for x in range(len(offspring-1)):
+            if random.random() < MUTATION_RATE:
+                random_index = random.sample(range(NO_OF_GENES), no_of_mutations)
+                for i in range(len(random_index)):
+                    if offspring[x][random_index[i]] > 0:
+                        offspring[x][random_index[i]] = offspring[x][random_index[i]] * -1
+                    elif offspring[x][random_index[i]] < 0:
+                        offspring[x][random_index[i]] = offspring[x][random_index[i]] * -1
 
     return offspring
 
@@ -214,7 +226,18 @@ def next_generation(generation, fitness, parents, offspring):
 
 
 def check_solution(population):
-    ideal_individual = [0 for x in range(NO_OF_GENES)]
+    ## Sum of Squares, Rastrigin, Dixon Price
+    if FITNESS_CHOICE == 1 or FITNESS_CHOICE == 2 or FITNESS_CHOICE == 3:
+        ideal_individual = [0 for x in range(NO_OF_GENES)]
+    ## Rosenbrock
+    elif FITNESS_CHOICE == 4:
+        ideal_individual = [1 for x in range(NO_OF_GENES)]
+    ## Schwefel
+    elif FITNESS_CHOICE == 5:
+        ideal_individual = [420.968 for x in range(NO_OF_GENES)]
+    ## Trid
+    elif FITNESS_CHOICE == 6:
+        ideal_individual = [ x*(NO_OF_GENES + 1 - x) for x in range(1, NO_OF_GENES+1)]
 
     for x in population:
         if len([i for i, j in zip(x, ideal_individual) if i == j]) == NO_OF_GENES:
@@ -223,22 +246,52 @@ def check_solution(population):
 
     return False
 
-
-# USE THIS MAIN FUNCTION TO COMPLETE YOUR CODE - MAKE SURE IT WILL RUN FROM COMOND LINE
-def main():
+def run(RUN_NUM, **kwargs):
+    lower_bound = LOWER_BOUND
+    upper_bound = UPPER_BOUND
+    global SOLUTION_FOUND
     global POPULATION_SIZE
     global GENERATIONS
-    global SOLUTION_FOUND
+    global NO_OF_PARENTS
+    global NO_OF_GENES
+    global MUTATION_RATE
+    global CROSSOVER_RATE
+    global INPUT
 
+    ## Takes optional argument of variable to change, defaults to None if left blank
+    var_to_change = kwargs.get('var_to_change', None)
+    value = kwargs.get('value', None)
+
+    if var_to_change == "MUTATION":
+        MUTATION_RATE = value
+    elif var_to_change == "CROSSOVER":
+        CROSSOVER_RATE = value
+    elif var_to_change == "POPULATION":
+        POPULATION_SIZE = value
+    elif var_to_change == "NO_OF_PARENTS":
+        NO_OF_PARENTS = value
+
+    print("Parameters for run: \n")
+    print("Population: \n", POPULATION_SIZE)
+    print("Number of parents: \n", NO_OF_PARENTS)
+    print("Mutation rate: \n", MUTATION_RATE)
+    print("Crossover rate: \n", CROSSOVER_RATE)
+
+    results_log = {}
     gen_count = 1
 
-    population = generate_population(POPULATION_SIZE, LOWER_BOUND, UPPER_BOUND)
+    if RUN_NUM == 0:
+        population = generate_population(POPULATION_SIZE, lower_bound, upper_bound)
+        saved_pop = population.copy()
+    elif RUN_NUM != 0 and (var_to_change == "POPULATION"):
+        population = generate_population(POPULATION_SIZE, lower_bound, upper_bound)
 
     fitness = [compute_fitness(x) for x in population]
+    results_log[gen_count] = max(fitness)
 
     while gen_count <= GENERATIONS and SOLUTION_FOUND != True:
 
-        parents = selection(population,fitness,NO_OF_PARENTS)
+        parents = selection(population, fitness, NO_OF_PARENTS)
 
         offspring = crossover(parents, POPULATION_SIZE - NO_OF_PARENTS)
 
@@ -253,8 +306,23 @@ def main():
         else:
             gen_count += 1
 
+    print("Best Individual", find_best_input(population, fitness))
+    print("Outcome of best individual: ", max(fitness))
 
-    print("Best Individual", find_best_input(population,fitness))
+    if SOLUTION_FOUND:
+        results_log.pop(gen_count)
+        SOLUTION_FOUND = False
+
+    return results_log
+
+
+def main():
+    global POPULATION_SIZE
+    global GENERATIONS
+    global SOLUTION_FOUND
+
+    run(0)
+
 
 
          # print('complete code for a continuous optimization problem:')

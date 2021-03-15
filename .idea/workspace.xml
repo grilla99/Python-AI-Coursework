@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2e249dc-f808-4709-8aae-5de9b012172d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ga-combinatorial-distrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ga-combinatorial-distrib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ga_continuous-distrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ga_continuous-distrib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,56 +16,77 @@
     <session id="1611072491">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.6" value="2" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="3" />
+          <entry key="py" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="3" />
+          <entry key="Python" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="7529" />
+          <entry key="py" value="10288" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="7529" />
+          <entry key="Python" value="10288" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
-              <folding>
-                <element signature="e#215#228#0" expanded="true" />
-                <marker date="1615406974685" expanded="true" signature="2121:2368" ph="..." />
-                <marker date="1615406974685" expanded="true" signature="3000:3005" ph="..." />
-                <marker date="1615406974685" expanded="true" signature="3347:3812" ph="..." />
-                <marker date="1615406974685" expanded="true" signature="3862:3867" ph="..." />
-                <marker date="1615406974685" expanded="true" signature="5499:5500" ph="..." />
-                <marker date="1615406974685" expanded="true" signature="5984:6111" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ga-combinatorial-distrib.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="552">
+                  <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+                  <folding>
+                    <marker date="1615801135065" expanded="true" signature="1332:1336" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="4297">
+                  <caret line="324" lean-forward="true" selection-start-line="324" selection-end-line="324" />
+                  <folding>
+                    <element signature="e#215#228#0" expanded="true" />
+                    <marker date="1615488333443" expanded="true" signature="2135:2382" ph="..." />
+                    <marker date="1615488333443" expanded="true" signature="3014:3019" ph="..." />
+                    <marker date="1615488333443" expanded="true" signature="3361:3826" ph="..." />
+                    <marker date="1615488333443" expanded="true" signature="3876:3881" ph="..." />
+                    <marker date="1615488333443" expanded="true" signature="6643:6770" ph="..." />
+                    <marker date="1615488333443" expanded="true" signature="7867:9943" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -80,6 +103,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/ga_continuous-distrib.py" />
+        <option value="$PROJECT_DIR$/ga-combinatorial-distrib.py" />
       </list>
     </option>
   </component>
@@ -89,29 +113,17 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="25" />
-    <option name="width" value="921" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="17" />
+    <option name="y" value="26" />
+    <option name="width" value="1663" />
     <option name="height" value="1025" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Python_AI" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Python_AI" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -170,10 +182,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="921" height="1025" extended-state="0" />
+    <frame x="0" y="25" width="1680" height="1025" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0022753128" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.0012360939" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -206,16 +218,26 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
+        <state relative-caret-position="4297">
+          <caret line="324" lean-forward="true" selection-start-line="324" selection-end-line="324" />
           <folding>
             <element signature="e#215#228#0" expanded="true" />
-            <marker date="1615406974685" expanded="true" signature="2121:2368" ph="..." />
-            <marker date="1615406974685" expanded="true" signature="3000:3005" ph="..." />
-            <marker date="1615406974685" expanded="true" signature="3347:3812" ph="..." />
-            <marker date="1615406974685" expanded="true" signature="3862:3867" ph="..." />
-            <marker date="1615406974685" expanded="true" signature="5499:5500" ph="..." />
-            <marker date="1615406974685" expanded="true" signature="5984:6111" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="2135:2382" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="3014:3019" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="3361:3826" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="3876:3881" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="6643:6770" ph="..." />
+            <marker date="1615488333443" expanded="true" signature="7867:9943" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ga-combinatorial-distrib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <marker date="1615801135065" expanded="true" signature="1332:1336" ph="..." />
           </folding>
         </state>
       </provider>
