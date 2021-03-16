@@ -13,6 +13,9 @@ import math
 import numpy as np
 import matplotlib as plt
 
+from math import cos, pi, sin,sqrt
+
+
 
 # MINIMUM GLOBAL VARIABLES TO BE USED
 POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
@@ -30,6 +33,11 @@ FITNESS_CHOICE = 1
 NO_OF_GENES = 8
 NO_OF_PARENTS = 8
 
+KNAPSACK = {}
+KNAPSACK_WEIGHT_THRESHOLD = 35
+
+
+
 FITNESS_DICTIONARY = {
     1: "Sum 1s (Minimisation)",
     2: "Sum 1s (Maximisation)"
@@ -46,6 +54,10 @@ def compute_fitness(individual):
     fitness_Function = {
         1: sum_ones,
         2: sum_ones,
+        3: match_string,
+        4: reach_number,
+        5: knapsack_problem,
+
     }
 
 
@@ -60,6 +72,50 @@ def sum_ones(individual):
     return fitness
 
 
+def match_string(individual):
+    fitness = 0
+    string_to_match = 'A string to match 99' #TODO: Make the population to be generated use a variety of chars
+
+    for x, y in zip(individual, string_to_match):
+        if x == y:
+            fitness += 1
+
+    try:
+        fitness = (1 / abs(fitness) * 100)
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+
+def reach_number(individual):
+    fitness = 0
+
+    number_to_reach = 100
+
+    fitness = number_to_reach - sum(individual)
+
+    try:
+        fitness = (1 / abs(fitness) * 100)
+    except ZeroDivisionError:
+        fitness = float('inf')
+    return fitness
+
+# https://www.youtube.com/watch?v=MacVqujSXWE
+# https://medium.com/koderunners/genetic-algorithm-part-3-knapsack-problem-b59035ddd1d6
+def knapsack_problem(individual):
+    sack_weight = 0
+    sack_value = 0
+
+    for x in range(len(individual)):
+        if individual[x] == 1:
+            sack_weight += KNAPSACK[x][0]
+            sack_value += KNAPSACK[x][1]
+
+    # If the bag exceeds the threshold weight, then isn't an acceptable solution
+    if sack_weight > KNAPSACK_WEIGHT_THRESHOLD:
+        return 0
+    else:
+        return sack_value
 
 
 
@@ -112,8 +168,16 @@ def main():
     global SOLUTION_FOUND
     
     population = generate_population(POPULATION_SIZE)
-    
-    
+
+    if FITNESS_CHOICE == 5:
+        for x in range(NO_OF_GENES):
+            KNAPSACK[x] = (random.randint(1, 15), random.randint(0, 600))
+
+    if FITNESS_CHOICE == 5:
+        print('Knapsack List is as follows: ')
+        for x in KNAPSACK:
+            print("Item No: ", x, "Weight: ", KNAPSACK[x][0], "Value: ", KNAPSACK[x][1])
+
     print('complete code for a combinitorial optimization problem:')
     while (True):  # TODO: write your termination condition here or within the loop 
         #TODO: write your generation propagation code here 
