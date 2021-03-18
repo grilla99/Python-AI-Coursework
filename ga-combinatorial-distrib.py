@@ -8,14 +8,12 @@ Keep you code anonymous
 """
 
 # Use standard python package only.
-import random 
+import random, string
 import math
 import numpy as np
 import matplotlib as plt
 
 from math import cos, pi, sin,sqrt
-
-
 
 # MINIMUM GLOBAL VARIABLES TO BE USED
 POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
@@ -37,29 +35,38 @@ KNAPSACK = {}
 KNAPSACK_WEIGHT_THRESHOLD = 35
 
 
-
 FITNESS_DICTIONARY = {
     1: "Sum 1s (Minimisation)",
-    2: "Sum 1s (Maximisation)"
+    2: "Sum 1s (Maximisation)",
+    3: "String matching",
+    4: "Reaching a number",
+    5: "Knapsack problem"
 }
 
 
 def generate_population(size):
-    
-    population = [[random.randint(0, 1) for _ in range(NO_OF_GENES)] for _ in range(POPULATION_SIZE)]
-    
+    if FITNESS_CHOICE == 1 or FITNESS_CHOICE == 2:
+        population = [[random.randint(0, 1) for _ in range(NO_OF_GENES)] for _ in range(POPULATION_SIZE)]
+    elif FITNESS_CHOICE == 3:
+        # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~0123456789
+        terms = string.ascii_letters + string.punctuation + string.digits
+        population = [[''.join(random.choice(terms) for _ in range(NO_OF_GENES))] for _ in range(POPULATION_SIZE)]
+
     return population
 
+
 def compute_fitness(individual):
-    fitness_Function = {
+    fitness_function = {
         1: sum_ones,
         2: sum_ones,
         3: match_string,
         4: reach_number,
         5: knapsack_problem,
-
     }
 
+    fitness_func = fitness_function.get(FITNESS_CHOICE)
+
+    return fitness_func(individual)
 
 def sum_ones(individual):
     fitness = 0
@@ -74,12 +81,11 @@ def sum_ones(individual):
 
 def match_string(individual):
     fitness = 0
-    string_to_match = 'A string to match 99' #TODO: Make the population to be generated use a variety of chars
+    string_to_match = 'An8Digit'
 
     for x, y in zip(individual, string_to_match):
         if x == y:
             fitness += 1
-
     try:
         fitness = (1 / abs(fitness) * 100)
     except ZeroDivisionError:
@@ -100,6 +106,7 @@ def reach_number(individual):
         fitness = float('inf')
     return fitness
 
+
 # https://www.youtube.com/watch?v=MacVqujSXWE
 # https://medium.com/koderunners/genetic-algorithm-part-3-knapsack-problem-b59035ddd1d6
 def knapsack_problem(individual):
@@ -112,41 +119,73 @@ def knapsack_problem(individual):
             sack_value += KNAPSACK[x][1]
 
     # If the bag exceeds the threshold weight, then isn't an acceptable solution
+    # So the function will return 0 to signify thiss
     if sack_weight > KNAPSACK_WEIGHT_THRESHOLD:
         return 0
     else:
         return sack_value
 
+def selection(population,fitness, no_of_parents):
+    parents = np.empty(NO_OF_PARENTS, NO_OF_GENES)
 
+    #Declaration required to avoid referenced before assignment error
 
-def compute_fitness(individual):
-    #TODO : Write your own code to generate fitness function evaluation for your select functions
-    print('fitness computed')
-    fitness = np.nan()
-    return fitness
+    positive_fitness = fitness.copy()
 
+    # Roulette Wheel Selection Operator
 
-def selection(population):
+    if (sum(i < 0 for i in fitness) != 0):
+        positive_fitness = [fitness[x] + abs(min(fitness)) + 1 for x in range(len(fitness))]
 
-    individual = []  # Update this line if you need to
-    #TODO : Write your own code to for choice  of your selection operator
-    
-    return individual
-    
+    total_fitness = sum(positive_fitness)
 
-def crossover(first_parent, second_parent):
-    
-    individual = [] # Update this line if you need to
-    #TODO : Write your own code to for choice  of your crossover operator - you can use if condition to write more tan one ime of crossover operator
-    
-    return individual
+    try:
+        relative_fitness = [(n / total_fitness) for n in positive_fitness]
+        roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False,
+                                            p=relative_fitness)
+    except ZeroDivisionError:
+        print("Population fitness of 0")
+        return False
 
-def mutation(individual):
-    
-    #TODO : Write your own code to for choice  of your mutation operator - you can use if condition to write more tan one ime of crossover operator
+    parents = [population[x] for x in roulette_indices]
+
+    return parents
     
 
-    return individual
+def crossover(parents, num_of_offspring):
+    offspring = np.empty((num_of_offspring, NO_OF_GENES))
+
+    for i in range(num_of_offspring):
+        parent1_index = i%NO_OF_PARENTS
+        parent2_index = (i+1)%NO_OF_PARENTS
+
+        if random.random() < CROSSOVER_RATE:
+            offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
+        else:
+            offspring[i] = list(parents[parent1_index])
+
+    return offspring
+
+def mutation(offspring):
+
+    # Scramble mutation for BINARY
+    if random.random() < MUTATION_RATE:
+        no_of_mutations = random.randint(0, NO_OF_GENES / 2)
+        affected_gene = random.randint(0, NO_OF_GENES / 2)
+
+        if no_of_mutations >= 1:
+            for x in range(no_of_mutations):
+                ## Swaps the 0 to 1 and 1 to 0.
+                offspring[affected_gene + x] = 1 - offspring[affected_gene + x]
+
+        elif True: #TODO: This needs to be changed to if it's a alphanumeric string
+            terms = string.ascii_letters + string.punctuation + string.digits
+            offspring[affected_gene] = random.choice(terms)
+
+
+
+
+    return offspring
 
 #TODO : You can increase number of function to be used to improve your GA code 
 

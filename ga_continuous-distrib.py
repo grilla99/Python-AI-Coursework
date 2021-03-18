@@ -17,12 +17,12 @@ import matplotlib as plt
 from math import cos, pi, sin,sqrt
 
 # MINIMUM GLOBAL VARIABLES TO BE USED
-POPULATION_SIZE = 50 # Change POPULATION_SIZE to obtain better fitness.
+POPULATION_SIZE = 50  # Change POPULATION_SIZE to obtain better fitness.
 
 GENERATIONS = 100 # Change GENERATIONS to obtain better fitness.
 SOLUTION_FOUND = False
 
-CROSSOVER_RATE = 0.8 # Change CORSSOVER_RATE  to obtain better fitness.
+CROSSOVER_RATE = 0.8 # Change CROSSOVER_RATE  to obtain better fitness.
 MUTATION_RATE = 0.6 # Change MUTATION_RATE to obtain better fitness.
 
 LOWER_BOUND = -10
@@ -126,8 +126,7 @@ def trid(individual):
     term2 = sum((individual[x] * individual[x-1]) for x in range(1, NO_OF_GENES))
 
     fitness = term1 - term2
-    ## Has no local minimum only the global. Defined as -d(d+4)(d-1)/6
-
+    # Has no local minimum only the global. Defined as -d(d+4)(d-1)/6
     ideal_fitness = -NO_OF_GENES*(NO_OF_GENES+4)*(NO_OF_GENES-1) / 6
 
     try:
@@ -144,8 +143,8 @@ def selection(population, fitness,no_of_parents):
     # Declaration required to avoid referenced before assignment error
     positive_fitness = fitness.copy()
 
-    ## ROULETTE WHEEL SELECTION OPERATOR ##
-    if (sum(i < 0 for i in fitness) != 0):
+    # Roulette Wheel Selection Operator
+    if sum(i < 0 for i in fitness) != 0:
         positive_fitness = [fitness[x] + abs(min(fitness)) + 1 for x in range(len(fitness))]
 
     total_fitness = sum(positive_fitness)
@@ -153,13 +152,13 @@ def selection(population, fitness,no_of_parents):
     try:
         # Computes the relative likelihoods for each parent to be chosen
         relative_fitness = [(n / total_fitness) for n in positive_fitness]
-        #Uses numpy to create a random sample using the relative fitness
+        # Uses numpy to create a random sample using the relative fitness
         roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False,
                                             p=relative_fitness)
     except ZeroDivisionError:
         print("Population fitness of 0")
-        roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False)
         return False
+
     parents = [population[x] for x in roulette_indices]
 
     return parents
@@ -169,12 +168,10 @@ def crossover(parents, num_of_offspring):
 
     offspring = np.empty((num_of_offspring, NO_OF_GENES))
 
-    ## SINGLE POINT CROSSOVER ##
-
+    # Single Point Crossover
     for i in range(num_of_offspring):
-        ## Get index of two parents within the array
-        parent1_index = i%NO_OF_PARENTS
-        parent2_index = (i+1)%NO_OF_PARENTS
+        parent1_index = i % NO_OF_PARENTS
+        parent2_index = (i+1) % NO_OF_PARENTS
 
         if random.random() < CROSSOVER_RATE:
             offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
@@ -185,7 +182,7 @@ def crossover(parents, num_of_offspring):
 
 
 def mutation(offspring):
-    #RANDOM RESETTING MUTATION
+    # Random Resetting Mutation
     no_of_mutations = 1
     if RUN_CHOICE == 1:
         for x in range(len(offspring-1)):
