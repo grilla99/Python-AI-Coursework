@@ -129,8 +129,9 @@ def knapsack_problem(individual):
         return sack_value
 
 
-def selection(population,fitness, no_of_parents):
-    parents = np.empty(NO_OF_PARENTS, NO_OF_GENES)
+def selection(population, fitness, no_of_parents):
+
+    parents = np.empty((no_of_parents, NO_OF_GENES))
 
     # Declaration required to avoid referenced before assignment error
     positive_fitness = fitness.copy()
@@ -202,10 +203,10 @@ def next_generation(previous_population):
 def check_solution(population):
     # Sum 1s (Minimisation)
     if FITNESS_CHOICE == 1:
-        ideal_solution = [0 for x in range(NO_OF_GENES)]
+        ideal_solution = [0 for _ in range(NO_OF_GENES)]
     # Sum 1s (Maximisation)
     elif FITNESS_CHOICE == 2:
-        ideal_solution = [1 for x in range(NO_OF_GENES)]
+        ideal_solution = [1 for _ in range(NO_OF_GENES)]
     # Matching a string
     elif FITNESS_CHOICE == 3:
         ideal_solution = "An8Digit"
@@ -245,7 +246,7 @@ def main():
     fitness = [compute_fitness(x) for x in population]
 
     if check_solution(population):
-        print("Best individual found")
+        print("Best individual found in", gen_count, " generations")
         SOLUTION_FOUND = True
     else:
         gen_count += 1

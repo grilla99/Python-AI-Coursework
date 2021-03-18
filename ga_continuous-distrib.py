@@ -217,13 +217,13 @@ def next_generation(generation, fitness, parents, offspring):
 def check_solution(population):
     ## Sum of Squares, Rastrigin, Dixon Price
     if FITNESS_CHOICE == 1 or FITNESS_CHOICE == 2 or FITNESS_CHOICE == 3:
-        ideal_individual = [0 for x in range(NO_OF_GENES)]
+        ideal_individual = [0 for _ in range(NO_OF_GENES)]
     ## Rosenbrock
     elif FITNESS_CHOICE == 4:
-        ideal_individual = [1 for x in range(NO_OF_GENES)]
+        ideal_individual = [1 for _ in range(NO_OF_GENES)]
     ## Schwefel
     elif FITNESS_CHOICE == 5:
-        ideal_individual = [420.968 for x in range(NO_OF_GENES)]
+        ideal_individual = [420.968 for _ in range(NO_OF_GENES)]
     ## Trid
     elif FITNESS_CHOICE == 6:
         ideal_individual = [ x*(NO_OF_GENES + 1 - x) for x in range(1, NO_OF_GENES+1)]
