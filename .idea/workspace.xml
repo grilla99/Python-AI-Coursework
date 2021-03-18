@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2e249dc-f808-4709-8aae-5de9b012172d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/City.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ga-combinatorial-distrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ga-combinatorial-distrib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ga_continuous-distrib.py" beforeDir="false" afterPath="$PROJECT_DIR$/ga_continuous-distrib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,96 +30,86 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="pstat" value="1" />
-          <entry key="py" value="16" />
+          <entry key="py" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Profiler Session" value="1" />
-          <entry key="Python" value="16" />
+          <entry key="Python" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="15957" />
+          <entry key="py" value="17659" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="15957" />
+          <entry key="Python" value="17659" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1038">
-                  <caret line="65" column="35" selection-start-line="63" selection-start-column="4" selection-end-line="65" selection-end-column="35" />
-                  <folding>
-                    <element signature="e#215#228#0" expanded="true" />
-                    <marker date="1616075729874" expanded="true" signature="1981:2228" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="2860:2865" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="3207:3670" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="3720:3725" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="6324:6451" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="7548:9666" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ga-combinatorial-distrib.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="383">
-                  <caret line="208" column="46" selection-start-line="208" selection-start-column="46" selection-end-line="208" selection-end-column="46" />
-                  <folding>
-                    <marker date="1616075717298" expanded="true" signature="2904:3332" ph="..." />
-                    <marker date="1616075717298" expanded="true" signature="6020:6702" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="434">
-                  <caret line="214" lean-forward="true" selection-start-line="214" selection-end-line="214" />
-                  <folding>
-                    <marker date="1616075729874" expanded="true" signature="1981:2228" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="2860:2865" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="3207:3670" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="3720:3725" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="6324:6451" ph="..." />
-                    <marker date="1616075729874" expanded="true" signature="7548:9666" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-372">
+              <caret line="148" column="63" lean-forward="true" selection-start-line="147" selection-start-column="8" selection-end-line="148" selection-end-column="63" />
+              <folding>
+                <marker date="1616075729874" expanded="true" signature="1981:2228" ph="..." />
+                <marker date="1616075729874" expanded="true" signature="2860:2865" ph="..." />
+                <marker date="1616075729874" expanded="true" signature="3207:3670" ph="..." />
+                <marker date="1616075729874" expanded="true" signature="3720:3725" ph="..." />
+                <marker date="1616075729874" expanded="true" signature="6324:6451" ph="..." />
+                <marker date="1616075729874" expanded="true" signature="7548:9666" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ga-combinatorial-distrib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="706">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+              <folding>
+                <element signature="e#60#81#0" expanded="true" />
+                <marker date="1616081972873" expanded="true" signature="3267:3603" ph="..." />
+                <marker date="1616081972873" expanded="true" signature="3770:4198" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/City.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#76#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>fitness</find>
       <find>relative_fitne</find>
-      <find>print</find>
       <find>roulette</find>
       <find>inf</find>
       <find>check_solution</find>
       <find>FITNESS_CH</find>
+      <find>replace</find>
+      <find>crossover</find>
+      <find>print</find>
+      <find>c</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -128,8 +118,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ga-combinatorial-distrib.py" />
         <option value="$PROJECT_DIR$/ga_continuous-distrib.py" />
+        <option value="$PROJECT_DIR$/City.py" />
+        <option value="$PROJECT_DIR$/ga-combinatorial-distrib.py" />
       </list>
     </option>
   </component>
@@ -148,7 +139,20 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Python_AI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Python_AI" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -264,7 +268,7 @@
     <frame x="0" y="25" width="1680" height="1025" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.0011990408" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13980465" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.32901832" />
@@ -304,12 +308,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/City.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#76#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ga_continuous-distrib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1038">
-          <caret line="65" column="35" selection-start-line="63" selection-start-column="4" selection-end-line="65" selection-end-column="35" />
+        <state relative-caret-position="-372">
+          <caret line="148" column="63" lean-forward="true" selection-start-line="147" selection-start-column="8" selection-end-line="148" selection-end-column="63" />
           <folding>
-            <element signature="e#215#228#0" expanded="true" />
             <marker date="1616075729874" expanded="true" signature="1981:2228" ph="..." />
             <marker date="1616075729874" expanded="true" signature="2860:2865" ph="..." />
             <marker date="1616075729874" expanded="true" signature="3207:3670" ph="..." />
@@ -322,11 +335,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ga-combinatorial-distrib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="208" column="46" selection-start-line="208" selection-start-column="46" selection-end-line="208" selection-end-column="46" />
+        <state relative-caret-position="706">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
           <folding>
-            <marker date="1616075717298" expanded="true" signature="2904:3332" ph="..." />
-            <marker date="1616075717298" expanded="true" signature="6020:6702" ph="..." />
+            <element signature="e#60#81#0" expanded="true" />
+            <marker date="1616081972873" expanded="true" signature="3267:3603" ph="..." />
+            <marker date="1616081972873" expanded="true" signature="3770:4198" ph="..." />
           </folding>
         </state>
       </provider>

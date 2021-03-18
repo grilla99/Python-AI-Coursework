@@ -4,11 +4,12 @@ import random, string
 import math
 import numpy as np
 import matplotlib as plt
+import City
 
 from math import cos, pi, sin,sqrt
 
 # MINIMUM GLOBAL VARIABLES TO BE USED
-POPULATION_SIZE = 50   # Change POPULATION_SIZE to obtain better fitness.
+POPULATION_SIZE = 100   # Change POPULATION_SIZE to obtain better fitness.
 
 GENERATIONS = 100  # Change GENERATIONS to obtain better fitness.
 SOLUTION_FOUND = False
@@ -18,11 +19,12 @@ MUTATION_RATE = 0.2  # Change MUTATION_RATE to obtain better fitness.
 
 LOWER_BOUND = -10
 UPPER_BOUND = 10
-FITNESS_CHOICE = 1
-NUMBER_TO_REACH = 100
+FITNESS_CHOICE = 4
+NUMBER_TO_REACH = 60
 
 NO_OF_GENES = 8
 NO_OF_PARENTS = 8
+NO_OF_CITIES = 12
 
 KNAPSACK = {}
 KNAPSACK_WEIGHT_THRESHOLD = 35
@@ -33,7 +35,8 @@ FITNESS_DICTIONARY = {
     2: "Sum 1s (Maximisation)",
     3: "String matching",
     4: "Reaching a number",
-    5: "Knapsack problem"
+    5: "Knapsack problem",
+    6: "Travelling Salesman"
 }
 
 
@@ -44,12 +47,19 @@ def generate_population(size):
     # String Matching
     elif FITNESS_CHOICE == 3:
         # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~0123456789
-        terms = string.ascii_letters + string.punctuation + string.digits
+        # Reduced to just ascii letters as wasn't capable of learning the full char set listed above
+        # terms = string.ascii_letters + string.punctuation + string.digits
+        terms = string.ascii_lowercase
         population = [[''.join(random.choice(terms) for _ in range(NO_OF_GENES))] for _ in range(POPULATION_SIZE)]
     # Reaching a number
     elif FITNESS_CHOICE == 4:
         population = [[random.randint(LOWER_BOUND, UPPER_BOUND) for _ in range(NO_OF_GENES)] for _ in
                       range(POPULATION_SIZE)]
+    # Travelling Salesman
+    elif FITNESS_CHOICE == 6:
+        # Assuming a 'board size' of 50. Change this if necessary
+        population = [[City.City(x, random.randrange(0, 50), random.randrange(0, 50)) for x in range(NO_OF_CITIES)] for
+                       _ in range(POPULATION_SIZE)]
 
     return population
 
@@ -61,6 +71,7 @@ def compute_fitness(individual):
         3: match_string,
         4: reach_number,
         5: knapsack_problem,
+        6: travelling_salesman
     }
 
     fitness_func = fitness_function.get(FITNESS_CHOICE)
@@ -82,17 +93,15 @@ def sum_ones(individual):
     return fitness
 
 
+#TODO: Needs some work as most strings return a fitness of 0
 def match_string(individual):
     fitness = 0
-    string_to_match = 'An8Digit'
+    string_to_match = 'eutopia'
 
-    for x, y in zip(individual, string_to_match):
-        if x == y:
+    for x in range(len(individual)):
+        if individual[0][x] == string_to_match[x]:
             fitness += 1
-    try:
-        fitness = (1 / abs(fitness) * 100)
-    except ZeroDivisionError:
-        fitness = float('inf')
+
     return fitness
 
 
@@ -108,6 +117,24 @@ def reach_number(individual):
     except ZeroDivisionError:
         fitness = float('inf')
     return fitness
+
+
+def travelling_salesman(individual):
+    fitness = 0
+
+    for x in range(len(individual)):
+        try:
+            city1 = individual[x]
+            city2 = individual[x+1]
+        except IndexError:
+            city2 = individual[0]
+
+        fitness += city1.distance(city2)
+
+    # 100 produced very low numbers
+    fitness = abs(1/fitness) * 1000
+    return fitness
+
 
 
 # https://www.youtube.com/watch?v=MacVqujSXWE
@@ -144,7 +171,7 @@ def selection(population, fitness, no_of_parents):
 
     try:
         relative_fitness = [(n / total_fitness) for n in positive_fitness]
-        roulette_indices = np.random.choice(range(0, POPULATION_SIZE), size=NO_OF_PARENTS, replace=False,
+        roulette_indices = np.random.choice(range(0, len(population)), size=NO_OF_PARENTS, replace=False,
                                             p=relative_fitness)
     except ZeroDivisionError:
         print("Population fitness of 0")
@@ -194,12 +221,6 @@ def mutation(offspring):
     return offspring
 
 
-def next_generation(previous_population):
-    #TODO : Write your own code to generate next
-    print(' ') # Print appropriate generation information here. 
-    return next_generation
-
-
 def check_solution(population):
     # Sum 1s (Minimisation)
     if FITNESS_CHOICE == 1:
@@ -209,10 +230,10 @@ def check_solution(population):
         ideal_solution = [1 for _ in range(NO_OF_GENES)]
     # Matching a string
     elif FITNESS_CHOICE == 3:
-        ideal_solution = "An8Digit"
+        ideal_solution = "eutopia"
     # Reaching a number
     elif FITNESS_CHOICE == 4:
-        ideal_solution = 100
+        ideal_solution = NUMBER_TO_REACH
         for x in population:
             if sum(x) == ideal_solution:
                 return True
@@ -243,6 +264,7 @@ def main():
     gen_count = 1
 
     population = generate_population(POPULATION_SIZE)
+
     fitness = [compute_fitness(x) for x in population]
 
     if check_solution(population):
@@ -268,6 +290,8 @@ def main():
         best_individual = population[fitness_index]
 
         print("Generation: ", gen_count, " Max fitness: ", max(fitness), " Best individual: ", best_individual)
+
+        gen_count += 1
 
     if FITNESS_CHOICE == 5:
         for x in range(NO_OF_GENES):
