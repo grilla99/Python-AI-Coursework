@@ -19,7 +19,7 @@ MUTATION_RATE = 0.2  # Change MUTATION_RATE to obtain better fitness.
 
 LOWER_BOUND = -10
 UPPER_BOUND = 10
-FITNESS_CHOICE = 4
+FITNESS_CHOICE = 1
 NUMBER_TO_REACH = 60
 
 NO_OF_GENES = 8
@@ -78,7 +78,7 @@ def compute_fitness(individual):
 
     return fitness_func(individual)
 
-
+# Summing ones (minimisation or maximisation)
 def sum_ones(individual):
     fitness = 0
     if FITNESS_CHOICE == 1:
@@ -92,8 +92,8 @@ def sum_ones(individual):
 
     return fitness
 
-
-#TODO: Needs some work as most strings return a fitness of 0
+# String matching problem
+#TODO: Needs some optimising as most strings return a fitness of 0
 def match_string(individual):
     fitness = 0
     string_to_match = 'eutopia'
@@ -104,7 +104,7 @@ def match_string(individual):
 
     return fitness
 
-
+# Reach a defined number problem
 def reach_number(individual):
     fitness = 0
 
@@ -118,7 +118,7 @@ def reach_number(individual):
         fitness = float('inf')
     return fitness
 
-
+# Travelling salesman problem
 def travelling_salesman(individual):
     fitness = 0
 
@@ -155,7 +155,7 @@ def knapsack_problem(individual):
     else:
         return sack_value
 
-
+# Selection genetic operator, same as in continuous optimisation
 def selection(population, fitness, no_of_parents):
 
     parents = np.empty((no_of_parents, NO_OF_GENES))

@@ -1,4 +1,4 @@
-import numpy as np, random, operator, pandas as pd, matplotlib.pyplot as plt
+import numpy as np, random, operator, matplotlib.pyplot as plt
 from math import sqrt
 
 class City:
