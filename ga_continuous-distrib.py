@@ -21,6 +21,7 @@ LOWER_BOUND = -10
 UPPER_BOUND = 10
 FITNESS_CHOICE = 6
 
+CROSSOVER_CHOICE = 1
 RUN_CHOICE = 2
 
 NO_OF_PARENTS = 8
@@ -165,11 +166,20 @@ def crossover(parents, num_of_offspring):
         parent1_index = i % NO_OF_PARENTS
         parent2_index = (i+1) % NO_OF_PARENTS
 
-        if random.random() < CROSSOVER_RATE:
-            offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
+        if CROSSOVER_CHOICE == 1:
+            if random.random() < CROSSOVER_RATE:
+                offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
+            else:
+                offspring[i] = list(parents[parent1_index])
         else:
-            offspring[i] = list(parents[parent1_index])
-
+            # 2 - Point Crossover
+            crossover_indexes = sorted(random.sample(NO_OF_GENES), 2)
+            if random.random() < CROSSOVER_RATE:
+                offspring[i] = list(parents[parent1_index][0:crossover_indexes[0]]) + \
+                    list(parents[parent2_index][crossover_indexes[0]:crossover_indexes[1]]) + \
+                    list(parents[parent1_index][crossover_indexes[1]::])
+            else:
+                offspring[i] = parents[parent1_index]
     return offspring
 
 
@@ -184,7 +194,7 @@ def mutation(offspring):
                 for i in range(len(random_index)):
                     offspring[x][random_index[i]] = random_value[0]
 
-    #Inversion Mutation, Flips - to + and + to -
+    # Inversion Mutation, Flips - to + and + to -
     elif RUN_CHOICE == 2:
         for x in range(len(offspring-1)):
             if random.random() < MUTATION_RATE:

@@ -24,7 +24,7 @@ NUMBER_TO_REACH = 60
 
 NO_OF_GENES = 8
 NO_OF_PARENTS = 8
-NO_OF_CITIES = 12
+NO_OF_CITIES = 8
 
 KNAPSACK = {}
 KNAPSACK_WEIGHT_THRESHOLD = 35
@@ -189,34 +189,86 @@ def crossover(parents, num_of_offspring):
         parent1_index = i % NO_OF_PARENTS
         parent2_index = (i+1) % NO_OF_PARENTS
 
-        if random.random() < CROSSOVER_RATE:
-            offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
-        else:
-            offspring[i] = list(parents[parent1_index])
+        # For problems that aren't travelling salesman, just uses single point crossover using the center as the pos
+        if FITNESS_CHOICE != 6:
+            if random.random() < CROSSOVER_RATE:
+                offspring[i] = list(parents[parent1_index][0:4]) + list(parents[parent2_index][4:9])
+            else:
+                offspring[i] = list(parents[parent1_index])
+        # Travelling salesman problem
+        elif FITNESS_CHOICE == 6:
+            # Need ordered crossover for Travelling Salesman.
+            if random.random() < CROSSOVER_RATE:
+                individual_offspring = [0 for _ in
+                                   range(NO_OF_CITIES)]  # Initialise it so I can change variables at specific places
+
+                # Get 2 points, Crosspoint 1 is always less than Crosspoint 2
+                crspt_1 = random.randint(0, NO_OF_GENES - 2)
+                crspt_2 = 0
+                while crspt_2 <= crspt_1:
+                    crspt_2 = random.randint(1, NO_OF_GENES - 1)
+
+                # Set the new offspring to have the cities between the crosspoints of parent 1
+                individual_offspring[crspt_1:crspt_2] = parents[parent1_index][crspt_1:crspt_2]
+
+                # Start at Parent 2's 2nd cross point, add city if it's ID doesn't already appear in the new offspring
+                off_count = 0
+                par_count = 0
+                # Repeat until the new offspring has the required amount of cities.
+                while len([x for x in individual_offspring if type(x) == City.City]) != NO_OF_CITIES:
+                    # Next position of parent 2 to check
+                    parent_index = (crspt_2 + par_count) % NO_OF_CITIES
+                    city_ids = [x.id for x in individual_offspring if type(x) == City.City]
+                    # If parent 2's city ID at index 'parent_index' is not already in the new offspring
+                    if not parents[parent2_index][parent_index].id in city_ids:
+                        # Add the City in parent 2's parent_index, to the next available space in the new offspring
+                        offspring_index = (crspt_2 + off_count) % NO_OF_CITIES
+                        individual_offspring[offspring_index] = parents[parent2_index][parent_index]
+                        off_count += 1
+
+                    par_count += 1
+            else:
+                # New offspring is the same as the parent if the crossover rate comparison fails
+                indivual_offspring = parents[parent1_index]
+
+            offspring.append(individual_offspring)
 
     return offspring
 
 
 def mutation(offspring):
 
-    # Scramble mutation for BINARY
     if random.random() < MUTATION_RATE:
         no_of_mutations = random.randint(0, NO_OF_GENES / 2)
         affected_gene = random.randint(0, NO_OF_GENES / 2)
 
-        if no_of_mutations >= 1 and (FITNESS_CHOICE == 1 or FITNESS_CHOICE == 2):
+        # Scramble mutation for BINARY
+        if FITNESS_CHOICE == 1 or FITNESS_CHOICE == 2:
             for x in range(no_of_mutations):
                 # Swaps the 0 to 1 and 1 to 0 for Binary Problems
                 offspring[affected_gene + x] = 1 - offspring[affected_gene + x]
-        elif no_of_mutations >= 1 and FITNESS_CHOICE == 3:
-            # Swaps character for another alphanumeric character
+        # Scramble mutation for alphanumeric
+        elif FITNESS_CHOICE == 3:
             for x in range(no_of_mutations):
-                terms = string.ascii_letters + string.punctuation + string.digits
-                offspring[affected_gene] = random.choice(terms)
-        elif no_of_mutations >= 1 and FITNESS_CHOICE == 4:
+                terms = string.ascii_letters
+                offspring[affected_gene + x] = random.choice(terms)
+        # Scramble mutation for Integers
+        elif FITNESS_CHOICE == 4:
             for x in range(no_of_mutations):
                 # Swaps to a random integer in allowed range (-10 to 10 for most runs)
                 offspring[affected_gene + x] = random.randint(LOWER_BOUND, UPPER_BOUND)
+        # Swap mutation for Travelling Salesman
+        elif FITNESS_CHOICE == 6:
+            second_gene = random.randint(0, NO_OF_GENES-1)
+            while second_gene == affected_gene:
+                second_gene = random.randint(0,NO_OF_GENES-1)
+
+            # Temp var to store original value of the first gene
+            original_gene = offspring[affected_gene]
+
+            # Perform the swap
+            offspring[affected_gene] = offspring[second_gene]
+            offspring[second_gene] = original_gene
 
     return offspring
 
@@ -238,7 +290,7 @@ def check_solution(population):
             if sum(x) == ideal_solution:
                 return True
     # Solution checking implemented elsewhere for FITNESS_CHOICE 5 and 6
-    else:
+    elif FITNESS_CHOICE == 5 or FITNESS_CHOICE == 6:
         return False
 
     for x in population:
@@ -260,6 +312,11 @@ def main():
     print("Number of genes: \n", NO_OF_GENES)
     print("Mutation rate: \n", MUTATION_RATE)
     print("Crossover rate: \n", CROSSOVER_RATE)
+
+    if FITNESS_CHOICE == 5:
+        print('Knapsack List is as follows: ')
+        for x in KNAPSACK:
+            print("Item No: ", x, "Weight: ", KNAPSACK[x][0], "Value: ", KNAPSACK[x][1])
 
     gen_count = 1
 
@@ -293,24 +350,30 @@ def main():
 
         gen_count += 1
 
-    if FITNESS_CHOICE == 5:
-        for x in range(NO_OF_GENES):
-            KNAPSACK[x] = (random.randint(1, 15), random.randint(0, 600))
 
-    if FITNESS_CHOICE == 5:
-        print('Knapsack List is as follows: ')
-        for x in KNAPSACK:
-            print("Item No: ", x, "Weight: ", KNAPSACK[x][0], "Value: ", KNAPSACK[x][1])
+    # Disclaimer: Graph Code taken from a friends project
 
-    print('complete code for a combinitorial optimization problem:')
-    while (True):  # TODO: write your termination condition here or within the loop 
-        #TODO: write your generation propagation code here 
+    # Visualise the Travelling Salesman Problem
+    if FITNESS_CHOICE == 6:
+        for x in range(len(population[fitness_index])):
+            pt1 = population[fitness_index][x]
+            try:
+                pt2 = population[fitness_index][x + 1]
+            except IndexError:
+                pt2 = population[fitness_index][0]
 
+            plt.plot([pt1.pos[0], pt2.pos[0]], [pt1.pos[1], pt2.pos[1]])
 
-        #TODO: present innovative graphical illustration like plots and presentation of genetic algorithm results 
-        #This is free (as you like) innovative part of the assessment.
-        break # Remove this line
- 
+        # Plot individual points on the 'board'
+        points = [x.pos for x in population[fitness_index]]
+        x, y = zip(*points)
+        plt.scatter(x, y, s=40)
+
+        for x in population[fitness_index]:
+            # Annotate the City IDs
+            plt.annotate(x.id, x.pos)
+
+        plt.show()
 
 if __name__ == '__main__': 
     main() 

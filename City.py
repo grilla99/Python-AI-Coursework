@@ -3,8 +3,9 @@ from math import sqrt
 
 class City:
 
-    def __init__(self, x, y):
+    def __init__(self, id, x, y):
        self.pos = (x,y)
+       self.ID = id
 
     def distance(self, city):
         xDis = abs(self.pos[0] - city.x)
